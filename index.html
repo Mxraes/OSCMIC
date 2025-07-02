@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle Detalhado de Obras</title>
+    <title>Controle Completo de Obras</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -25,265 +25,202 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden my-8">
+    <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg overflow-hidden my-8">
         <header class="bg-gray-800 p-6">
             <h1 class="text-2xl font-bold text-white">Controle e Análise de Obra</h1>
             <p class="text-gray-300 mt-1">Busque uma OS para atualizar ou preencha os campos para adicionar uma nova.</p>
         </header>
 
         <form id="os-form" class="p-8 space-y-8">
-            <!-- CAMPO OCULTO PARA ATUALIZAÇÃO -->
             <input type="hidden" id="row_index" name="row_index">
 
             <!-- Seção de Busca -->
             <div>
                 <h2 class="section-title text-indigo-600 border-indigo-500">Buscar OS Existente</h2>
-                <p class="text-sm text-gray-600 mb-4">Para atualizar dados, digite o Nº da OS e clique em buscar. Para uma nova obra, apenas preencha os campos abaixo.</p>
                 <div class="flex flex-wrap items-center gap-4">
                     <div class="flex-grow">
                         <label for="search_os" class="sr-only">Buscar Nº da OS</label>
                         <input type="text" id="search_os" placeholder="Digite o Nº da OS para buscar..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     </div>
-                    <button type="button" id="search-button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-gray-400">
-                        Buscar OS
-                    </button>
+                    <button type="button" id="search-button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">Buscar OS</button>
                     <button type="button" id="clear-button" class="text-sm font-medium text-gray-600 hover:text-gray-900">Limpar Formulário</button>
                 </div>
             </div>
-            
             <hr/>
 
-            <!-- Seção Clientes -->
+            <!-- Dados Gerais -->
             <div>
-                <h2 class="section-title text-gray-800">Informações do Cliente e Serviço</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label for="os" class="block text-sm font-medium text-gray-700">Nº da OS</label>
-                        <input type="text" id="os" name="os" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="clientes" class="block text-sm font-medium text-gray-700">Cliente</label>
-                        <input type="text" id="clientes" name="clientes" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="servico" class="block text-sm font-medium text-gray-700">Serviço</label>
-                        <input type="text" id="servico" name="servico" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
+                <h2 class="section-title">Dados Gerais da OS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div><label for="os" class="block text-sm font-medium">Nº da OS</label><input type="text" id="os" name="os" required class="mt-1 block w-full input"></div>
+                    <div><label for="clientes" class="block text-sm font-medium">Cliente</label><input type="text" id="clientes" name="clientes" required class="mt-1 block w-full input"></div>
+                    <div><label for="servico" class="block text-sm font-medium">Serviço</label><input type="text" id="servico" name="servico" class="mt-1 block w-full input"></div>
+                    <div><label for="valor_servico" class="block text-sm font-medium">Valor Serviço</label><input type="number" step="0.01" id="valor_servico" name="valor_servico" class="mt-1 block w-full input" placeholder="R$"></div>
                 </div>
             </div>
 
-            <!-- Seção Serviço Previsto -->
+            <!-- Planejamento -->
             <div>
-                <h2 class="section-title text-orange-600 border-orange-500">Serviço Previsto</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label for="data_inicio_previsto" class="block text-sm font-medium text-gray-700">Data Início (Prev.)</label>
-                        <input type="date" id="data_inicio_previsto" name="data_inicio_previsto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="data_termino_previsto" class="block text-sm font-medium text-gray-700">Data Término (Prev.)</label>
-                        <input type="date" id="data_termino_previsto" name="data_termino_previsto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="custo_equipe_previsto" class="block text-sm font-medium text-gray-700">Custo Equipe (Prev.)</label>
-                        <input type="number" step="0.01" id="custo_equipe_previsto" name="custo_equipe_previsto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="R$">
-                    </div>
-                    <div>
-                        <label for="custo_mat_previsto" class="block text-sm font-medium text-gray-700">Custo Material (Prev.)</label>
-                        <input type="number" step="0.01" id="custo_mat_previsto" name="custo_mat_previsto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="R$">
-                    </div>
-                    <div class="md:col-span-2 lg:col-span-4">
-                        <label for="mat_prod_previsto" class="block text-sm font-medium text-gray-700">Materiais/Produtos (Previstos)</label>
-                        <textarea id="mat_prod_previsto" name="mat_prod_previsto" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Separar com vírgulas"></textarea>
-                    </div>
+                <h2 class="section-title text-orange-600 border-orange-500">Planejamento / Previsto</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div><label for="equipamento_previsto" class="block text-sm font-medium">Equipamento</label><input type="text" id="equipamento_previsto" name="equipamento_previsto" class="mt-1 block w-full input"></div>
+                    <div><label for="custo_equipe_previsto" class="block text-sm font-medium">Custo Equipe</label><input type="number" step="0.01" id="custo_equipe_previsto" name="custo_equipe_previsto" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div><label for="custo_servico_previsto" class="block text-sm font-medium">Custo Serviço</label><input type="number" step="0.01" id="custo_servico_previsto" name="custo_servico_previsto" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div><label for="total1" class="block text-sm font-medium">Total Previsto</label><input type="number" step="0.01" id="total1" name="total1" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div class="md:col-span-4"><label for="mat_prod_previsto" class="block text-sm font-medium">Material / Produto</label><textarea id="mat_prod_previsto" name="mat_prod_previsto" rows="2" class="mt-1 block w-full input"></textarea></div>
                 </div>
             </div>
 
-            <!-- Seção Serviço Executado -->
+            <!-- Execução -->
             <div>
-                <h2 class="section-title text-green-600 border-green-500">Serviço Executado</h2>
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label for="data_inicio_executado" class="block text-sm font-medium text-gray-700">Data Início (Exec.)</label>
-                        <input type="date" id="data_inicio_executado" name="data_inicio_executado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="data_termino_executado" class="block text-sm font-medium text-gray-700">Data Término (Exec.)</label>
-                        <input type="date" id="data_termino_executado" name="data_termino_executado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="custo_equipe_executado" class="block text-sm font-medium text-gray-700">Custo Equipe (Exec.)</label>
-                        <input type="number" step="0.01" id="custo_equipe_executado" name="custo_equipe_executado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="R$">
-                    </div>
-                    <div>
-                        <label for="custo_mat_executado" class="block text-sm font-medium text-gray-700">Custo Material (Exec.)</label>
-                        <input type="number" step="0.01" id="custo_mat_executado" name="custo_mat_executado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="R$">
-                    </div>
-                    <div class="lg:col-span-2">
-                        <label for="equipe_executado" class="block text-sm font-medium text-gray-700">Equipe (Exec.)</label>
-                        <input type="text" id="equipe_executado" name="equipe_executado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Nomes separados por vírgula">
-                    </div>
-                     <div class="lg:col-span-2">
-                        <label for="mat_prod_executado" class="block text-sm font-medium text-gray-700">Materiais/Produtos (Utilizados)</label>
-                        <textarea id="mat_prod_executado" name="mat_prod_executado" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Separar com vírgulas"></textarea>
-                    </div>
+                <h2 class="section-title text-green-600 border-green-500">Execução da Obra</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div><label for="equipamento_executado" class="block text-sm font-medium">Equipamento</label><input type="text" id="equipamento_executado" name="equipamento_executado" class="mt-1 block w-full input"></div>
+                    <div><label for="custo_equipe_executado" class="block text-sm font-medium">Custo Equipe</label><input type="number" step="0.01" id="custo_equipe_executado" name="custo_equipe_executado" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div><label for="custo_servico_executado" class="block text-sm font-medium">Custo Serviço</label><input type="number" step="0.01" id="custo_servico_executado" name="custo_servico_executado" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div><label for="total2" class="block text-sm font-medium">Total Executado</label><input type="number" step="0.01" id="total2" name="total2" class="mt-1 block w-full input" placeholder="R$"></div>
+                    <div class="md:col-span-2"><label for="mat_prod_executado" class="block text-sm font-medium">Material / Produto</label><textarea id="mat_prod_executado" name="mat_prod_executado" rows="2" class="mt-1 block w-full input"></textarea></div>
+                    <div class="md:col-span-2"><label for="art_ldo_proj_executado" class="block text-sm font-medium">ART / LDO / PROJ</label><textarea id="art_ldo_proj_executado" name="art_ldo_proj_executado" rows="2" class="mt-1 block w-full input"></textarea></div>
                 </div>
             </div>
-            
-            <!-- Seção Análise da Obra -->
+
+            <!-- Prazos e Datas -->
             <div>
-                <h2 class="section-title text-yellow-600 border-yellow-500">Análise da Obra</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label for="faturamento" class="block text-sm font-medium text-gray-700">Faturamento (FAT)</label>
-                        <input type="number" step="0.01" id="faturamento" name="faturamento" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="R$">
+                <h2 class="section-title text-cyan-600 border-cyan-500">Prazos e Datas</h2>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-6">
+                    <div><label for="data_abertura" class="block text-sm font-medium">Abertura</label><input type="date" id="data_abertura" name="data_abertura" class="mt-1 block w-full input"></div>
+                    <div><label for="data_inicio" class="block text-sm font-medium">Início</label><input type="date" id="data_inicio" name="data_inicio" class="mt-1 block w-full input"></div>
+                    <div><label for="data_final" class="block text-sm font-medium">Final</label><input type="date" id="data_final" name="data_final" class="mt-1 block w-full input"></div>
+                    <div><label for="delay" class="block text-sm font-medium">Delay (dias)</label><input type="number" id="delay" name="delay" class="mt-1 block w-full input"></div>
+                    <div><label for="dias_trabalhados" class="block text-sm font-medium">Dias Trab.</label><input type="number" id="dias_trabalhados" name="dias_trabalhados" class="mt-1 block w-full input"></div>
+                    <div><label for="total_dias" class="block text-sm font-medium">Total Dias</label><input type="number" id="total_dias" name="total_dias" class="mt-1 block w-full input"></div>
+                </div>
+            </div>
+
+            <!-- Financeiro e Documentação -->
+            <div>
+                <h2 class="section-title text-purple-600 border-purple-500">Financeiro e Documentação</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div><label for="pro_labore" class="block text-sm font-medium">Pró Labore</label><input type="number" step="0.01" id="pro_labore" name="pro_labore" class="mt-1 block w-full input" placeholder="R$"></div>
+                        <div><label for="total_final" class="block text-sm font-medium">Total Final</label><input type="number" step="0.01" id="total_final" name="total_final" class="mt-1 block w-full input" placeholder="R$"></div>
                     </div>
-                     <div>
-                        <label for="status_abertura" class="block text-sm font-medium text-gray-700">Status Abertura</label>
-                        <input type="text" id="status_abertura" name="status_abertura" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Ex: OK, Atrasado">
-                    </div>
                     <div>
-                        <label for="status_projeto" class="block text-sm font-medium text-gray-700">Status Projeto</label>
-                        <input type="text" id="status_projeto" name="status_projeto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Ex: No prazo, Concluído">
+                        <label class="block text-sm font-medium">Documentos</label>
+                        <div class="mt-2 flex items-center space-x-6">
+                            <div class="flex items-center"><input id="doc_art" name="doc_art" type="checkbox" class="h-4 w-4 rounded"><label for="doc_art" class="ml-2 text-sm">ART</label></div>
+                            <div class="flex items-center"><input id="doc_laudo" name="doc_laudo" type="checkbox" class="h-4 w-4 rounded"><label for="doc_laudo" class="ml-2 text-sm">Laudo</label></div>
+                            <div class="flex items-center"><input id="doc_projeto" name="doc_projeto" type="checkbox" class="h-4 w-4 rounded"><label for="doc_projeto" class="ml-2 text-sm">Projeto</label></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="pt-4 flex justify-end">
-                <button type="submit" id="submit-button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400">
+                <button type="submit" id="submit-button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700">
                     <span id="button-text">Adicionar Dados</span>
-                    <svg id="button-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
                 </button>
             </div>
         </form>
     </div>
 
-    <!-- Mensagem de Alerta (Toast) -->
-    <div id="toast" class="toast fixed top-5 right-5 text-white py-2 px-4 rounded-lg shadow-md opacity-0 transform -translate-y-10">
-        <span id="toast-message"></span>
-    </div>
+    <div id="toast" class="toast fixed top-5 right-5 text-white py-2 px-4 rounded-lg shadow-md opacity-0 transform -translate-y-10"><span id="toast-message"></span></div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzMTV1KX7-uTD-C0nd7Im1X1fuiPwgkpIlNNk0ncX1zjwFZ6LlQK5U21DGw2PaX8mul/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx_dnLQFeRDCqWbCsMgJu_sA_szP_vmVj1xg_YY3p67o3VhNjgQdq2BBM4KjtwRRQbi/exec';
 
         const form = document.getElementById('os-form');
+        const allFormElements = Array.from(form.elements);
         const submitButton = document.getElementById('submit-button');
         const buttonText = document.getElementById('button-text');
-        const buttonSpinner = document.getElementById('button-spinner');
         const searchButton = document.getElementById('search-button');
         const clearButton = document.getElementById('clear-button');
         const searchInput = document.getElementById('search_os');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
 
-        // Evento para o botão de busca
         searchButton.addEventListener('click', () => {
             const osToSearch = searchInput.value.trim();
-            if (!osToSearch) {
-                showToast('Digite um Nº de OS para buscar.', 'error');
-                return;
-            }
-            if (SCRIPT_URL === '') {
-                showToast('ERRO: A URL do script não foi configurada.', 'error');
-                return;
-            }
-            setLoading(true, searchButton);
+            if (!osToSearch) return showToast('Digite um Nº de OS para buscar.', 'error');
+            if (!SCRIPT_URL) return showToast('ERRO: A URL do script não foi configurada.', 'error');
             
+            setLoading(true, searchButton);
             fetch(`${SCRIPT_URL}?action=search&os=${osToSearch}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.result === 'success') {
                         populateForm(data.data);
-                        showToast(`OS ${osToSearch} carregada com sucesso!`, 'success');
+                        showToast(`OS ${osToSearch} carregada!`, 'success');
                         buttonText.textContent = 'Atualizar Dados';
                     } else {
                         showToast(data.message, 'error');
                         clearForm();
                     }
                 })
-                .catch(error => {
-                    console.error('Error!', error);
-                    showToast(`Erro ao buscar: ${error.message}`, 'error');
-                })
-                .finally(() => {
-                    setLoading(false, searchButton);
-                });
+                .catch(error => showToast(`Erro ao buscar: ${error.message}`, 'error'))
+                .finally(() => setLoading(false, searchButton));
         });
 
-        // Evento para o botão de limpar
         clearButton.addEventListener('click', clearForm);
 
-        // Evento para o formulário principal (adicionar/atualizar)
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (SCRIPT_URL === '') {
-                showToast('ERRO: A URL do script não foi configurada.', 'error');
-                return;
-            }
+            if (!SCRIPT_URL) return showToast('ERRO: A URL do script não foi configurada.', 'error');
+            
             setLoading(true, submitButton);
-            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form)})
-            .then(res => res.json())
-            .then(data => {
-                const isUpdate = document.getElementById('row_index').value !== '';
-                const message = isUpdate ? 'Dados atualizados com sucesso!' : 'Nova obra adicionada com sucesso!';
-                if (data.result === 'success') {
-                    showToast(message, 'success');
-                    clearForm();
-                } else { throw new Error(data.message || 'Ocorreu um erro desconhecido.'); }
-            })
-            .catch(error => {
-                console.error('Error!', error);
-                showToast(`Erro ao enviar: ${error.message}`, 'error');
-            })
-            .finally(() => { setLoading(false, submitButton); });
+            const formData = new FormData(form);
+            // Garante que checkboxes não marcados sejam enviados como 'FALSE'
+            ['doc_art', 'doc_laudo', 'doc_projeto'].forEach(name => {
+                if (!formData.has(name)) {
+                    formData.append(name, 'FALSE');
+                } else {
+                    formData.set(name, 'TRUE');
+                }
+            });
+
+            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(data => {
+                    const isUpdate = document.getElementById('row_index').value !== '';
+                    const message = isUpdate ? 'Dados atualizados com sucesso!' : 'Nova obra adicionada!';
+                    if (data.result === 'success') {
+                        showToast(message, 'success');
+                        clearForm();
+                    } else { throw new Error(data.message); }
+                })
+                .catch(error => showToast(`Erro ao enviar: ${error.message}`, 'error'))
+                .finally(() => setLoading(false, submitButton));
         });
         
-        // Função para preencher o formulário com dados da busca
         function populateForm(data) {
-            document.getElementById('row_index').value = data.rowIndex;
-            // Mapeia os dados para os IDs dos campos do formulário
-            const fields = {
-                os: data.os, clientes: data.clientes, servico: data.servico,
-                data_inicio_previsto: data.data_inicio_previsto, data_termino_previsto: data.data_termino_previsto,
-                custo_equipe_previsto: data.custo_equipe_previsto, custo_mat_previsto: data.custo_mat_previsto,
-                mat_prod_previsto: data.mat_prod_previsto, data_inicio_executado: data.data_inicio_executado,
-                data_termino_executado: data.data_termino_executado, custo_equipe_executado: data.custo_equipe_executado,
-                custo_mat_executado: data.custo_mat_executado, equipe_executado: data.equipe_executado,
-                mat_prod_executado: data.mat_prod_executado, faturamento: data.faturamento,
-                status_abertura: data.status_abertura, status_projeto: data.status_projeto
-            };
-            for (const id in fields) {
-                // Usa o nome do campo do formulário (name) para preencher
-                const element = form.elements[id];
-                if (element) {
-                    element.value = data[id.toLowerCase().replace(/ /g, '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")] || '';
+            clearForm();
+            document.getElementById('row_index').value = data.rowindex;
+            allFormElements.forEach(el => {
+                const key = el.name.toLowerCase();
+                if (data.hasOwnProperty(key)) {
+                    if (el.type === 'checkbox') {
+                        el.checked = (data[key] === true || data[key] === 'TRUE');
+                    } else {
+                        el.value = data[key] || '';
+                    }
                 }
-            }
+            });
         }
         
-        // Função para limpar o formulário
         function clearForm() {
             form.reset();
             document.getElementById('row_index').value = '';
-            searchInput.value = '';
             buttonText.textContent = 'Adicionar Dados';
         }
 
         function setLoading(isLoading, btn) {
             btn.disabled = isLoading;
-            const text = btn.querySelector('span');
-            const spinner = btn.querySelector('svg');
-            if(text) text.classList.toggle('hidden', isLoading);
-            if(spinner) spinner.classList.toggle('hidden', !isLoading);
+            btn.style.opacity = isLoading ? '0.7' : '1';
         }
 
         function showToast(message, type = 'success') {
             toastMessage.textContent = message;
-            toast.className = 'toast fixed top-5 right-5 text-white py-3 px-5 rounded-lg shadow-xl opacity-0 transform -translate-y-10'; // Reset classes
-            toast.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+            toast.className = `toast fixed top-5 right-5 text-white py-3 px-5 rounded-lg shadow-xl opacity-0 transform -translate-y-10 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
             toast.classList.remove('opacity-0', '-translate-y-10');
             toast.classList.add('opacity-100', 'translate-y-0');
             setTimeout(() => {
@@ -291,6 +228,11 @@
                 toast.classList.add('opacity-0', '-translate-y-10');
             }, 5000);
         }
+        
+        // Adiciona a classe 'input' para estilização geral
+        document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], textarea, select').forEach(el => {
+            el.classList.add('rounded-md', 'border-gray-300', 'shadow-sm', 'focus:border-blue-500', 'focus:ring-blue-500', 'sm:text-sm');
+        });
     </script>
 </body>
 </html>
